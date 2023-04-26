@@ -52,6 +52,7 @@ function BinaryTreeDisplay() {
             const isClicked = clickedNode && clickedNode.value === node;
             const pathToRoot = clickedNode && clickedNode.path.includes(index);
             const fillColor = pathToRoot ? "red" : "white";
+            const isPath = pathToRoot && index > 0;
 
             // Calculate coordinates of parent node
 
@@ -64,7 +65,8 @@ function BinaryTreeDisplay() {
             const parentY = parentLevel * 80 + 40;
 
             // Determine whether to draw line to parent node
-            const drawLineToParent = pathToRoot && index > 0;
+            const drawLineToParent = index > 0;
+            const strokeColor = pathToRoot ? "red" : "black";
 
             return (
               <g key={index}>
@@ -74,7 +76,7 @@ function BinaryTreeDisplay() {
                     y1={y}
                     x2={parentX}
                     y2={parentY}
-                    stroke="red"
+                    stroke={strokeColor}
                     strokeWidth="2"
                   />
                 )}
@@ -85,6 +87,7 @@ function BinaryTreeDisplay() {
                   y={y}
                   x2={parentX}
                   y2={parentY}
+                  isPath={isPath}
                   fillColor={fillColor}
                   isClicked={isClicked}
                 />
@@ -94,7 +97,7 @@ function BinaryTreeDisplay() {
         </svg>
       )}
     </div>
-  );
+  );1
 }
 
 export default BinaryTreeDisplay;
