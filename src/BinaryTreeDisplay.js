@@ -5,12 +5,15 @@ function BinaryTreeDisplay() {
   const [inputArray, setInputArray] = useState([]);
   const [clickedNode, setClickedNode] = useState(null);
 
-  const handleInput = (event) => {
-    const inputString = event.target.value;
+  const handleSubmit = (event) => {
+    event.preventDefault(); // prevent form from submitting and refreshing the page
+
+    const inputString = event.target.elements.inputArray.value;
     const inputArray = inputString
       .split(",")
       .map((node) => parseInt(node.trim()));
     setInputArray(inputArray);
+    console.log("Input submitted!");
     console.log("input array", inputArray);
     setClickedNode(null);
   };
@@ -35,12 +38,20 @@ function BinaryTreeDisplay() {
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        onChange={handleInput}
-        placeholder="Enter binary tree as input array"
-      />
+    <div
+      style={{ padding: "10px", border: "2px solid black", borderRadius: "2%" }}
+    >
+      <form onSubmit={handleSubmit} style={{ display: "flex" }}>
+        <input
+          type="text"
+          id="inputArray"
+          className="input"
+          placeholder="1,2,3,4,5,6"
+        />
+        <button type="submit" className="submit-button">
+          Submit
+        </button>
+      </form>
       {inputArray.length > 0 && (
         <svg height="1000px" width="100%">
           {inputArray.map((node, index) => {
@@ -51,7 +62,7 @@ function BinaryTreeDisplay() {
             const y = level * 80 + 40;
             const isClicked = clickedNode && clickedNode.value === node;
             const pathToRoot = clickedNode && clickedNode.path.includes(index);
-            const fillColor = pathToRoot ? "red" : "white";
+            const fillColor = pathToRoot ? "#46aac0" : "white";
             const isPath = pathToRoot && index > 0;
 
             // Calculate coordinates of parent node
@@ -66,7 +77,7 @@ function BinaryTreeDisplay() {
 
             // Determine whether to draw line to parent node
             const drawLineToParent = index > 0;
-            const strokeColor = pathToRoot ? "red" : "black";
+            const strokeColor = pathToRoot ? "#46aac0" : "black";
 
             return (
               <g key={index}>
@@ -75,9 +86,9 @@ function BinaryTreeDisplay() {
                     x1={x}
                     y1={y}
                     x2={parentX}
-                    y2={parentY+20}
+                    y2={parentY + 20}
                     stroke={strokeColor}
-                    strokeWidth="2"
+                    strokeWidth={pathToRoot ? "3" : "1"}
                   />
                 )}
                 <TreeNode
@@ -97,7 +108,8 @@ function BinaryTreeDisplay() {
         </svg>
       )}
     </div>
-  );1
+  );
+  1;
 }
 
 export default BinaryTreeDisplay;
