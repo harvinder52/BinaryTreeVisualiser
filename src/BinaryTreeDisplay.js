@@ -39,7 +39,7 @@ function BinaryTreeDisplay() {
 
   return (
     <div
-      style={{ padding: "10px", border: "2px solid black", borderRadius: "2%" }}
+      style={{ padding: "10px", border: "2px solid black", borderRadius: "2%", height: '94vh' }}
     >
       <form onSubmit={handleSubmit} style={{ display: "flex" }}>
         <input
@@ -53,7 +53,7 @@ function BinaryTreeDisplay() {
         </button>
       </form>
       {inputArray.length > 0 && (
-        <svg height="1000px" width="100%">
+        <svg height="inherit" width="100%">
           {inputArray.map((node, index) => {
             const level = Math.floor(Math.log2(index + 1));
             const levelWidth = 800 / Math.pow(2, level + 1);
