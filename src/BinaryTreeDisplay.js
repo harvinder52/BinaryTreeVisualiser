@@ -75,7 +75,7 @@ function BinaryTreeDisplay() {
                     x1={x}
                     y1={y}
                     x2={parentX}
-                    y2={parentY}
+                    y2={parentY+20}
                     stroke={strokeColor}
                     strokeWidth="2"
                   />
