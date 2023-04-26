@@ -11,6 +11,7 @@ function BinaryTreeDisplay() {
       .split(",")
       .map((node) => parseInt(node.trim()));
     setInputArray(inputArray);
+    console.log("input array", inputArray);
     setClickedNode(null);
   };
 
@@ -41,25 +42,26 @@ function BinaryTreeDisplay() {
         placeholder="Enter binary tree as input array"
       />
       {inputArray.length > 0 && (
-        <svg height={(Math.floor(inputArray.length / 2) + 1) * 80} width="100%">
+        <svg height="1000px" width="100%">
           {inputArray.map((node, index) => {
             const level = Math.floor(Math.log2(index + 1));
+            const levelWidth = 800 / Math.pow(2, level + 1);
             const x =
-              (index + 1 - Math.pow(2, level)) *
-                (800 / Math.pow(2, level + 1)) +
-              400 / Math.pow(2, level);
+              levelWidth * (index + 1 - Math.pow(2, level)) + levelWidth / 2;
             const y = level * 80 + 40;
             const isClicked = clickedNode && clickedNode.value === node;
             const pathToRoot = clickedNode && clickedNode.path.includes(index);
             const fillColor = pathToRoot ? "red" : "white";
 
             // Calculate coordinates of parent node
+
             const parentIndex = Math.floor((index - 1) / 2);
+            const parentLevel = level - 1;
+            const parentLevelWidth = 800 / Math.pow(2, parentLevel + 1);
             const parentX =
-              (parentIndex + 1 - Math.pow(2, level - 1)) *
-                (800 / Math.pow(2, level)) +
-              400 / Math.pow(2, level - 1);
-            const parentY = (level - 1) * 80 + 40;
+              parentLevelWidth * (parentIndex + 1 - Math.pow(2, parentLevel)) +
+              parentLevelWidth / 2;
+            const parentY = parentLevel * 80 + 40;
 
             // Determine whether to draw line to parent node
             const drawLineToParent = pathToRoot && index > 0;
@@ -81,6 +83,8 @@ function BinaryTreeDisplay() {
                   onClick={handleNodeClick}
                   x={x}
                   y={y}
+                  x2={parentX}
+                  y2={parentY}
                   fillColor={fillColor}
                   isClicked={isClicked}
                 />
